@@ -14,7 +14,7 @@ class Graph{
 
     void addEdge(int v,int w);
 
-    void BFS(int s);
+    void DFS(int s);
 };
 
 Graph::Graph(int V){
@@ -27,36 +27,36 @@ void Graph::addEdge(int v, int w){
     adj[v].push_back(w);
 }
 
-void Graph::BFS(int s){
+void Graph::DFS(int s){
     //create visited array of type boolean
     bool *visited = new bool[V];
     for(int i=0;i<V;i++){
         visited[i]=false;
     }
 
-    //Queue for the BFS
-    list<int> queue;
+    //stack for the BFS
+    list<int> stack;
 
     //starting with starting vertex
     visited[s]=true;
-    queue.push_back(s);
+    stack.push_back(s);
     
     //Now we will need an iterator "point" which will be used to get all adjacent 
     //vertices of vertex.
     list<int>::iterator point;
 
-    while(!queue.empty()){
-        //Dequeue a vertex from queue and print
+    while(!stack.empty()){
+        //pop a vertex from stack and print
         //also mark it visited
-        s = queue.front();
+        s = stack.back();
         cout<<s<<" ";
-        queue.pop_front();
+        stack.pop_back();
 
-        //Now Enqueue all the adjacent vertex in queue and repeat the process
+        //Now push all the adjacent vertex in stack and repeat the process
         for(point = adj[s].begin();point!=adj[s].end();point++){
             if(!visited[*point]){
                 visited[*point]=true;
-                queue.push_back(*point);
+                stack.push_back(*point);
             }
         }
     }
@@ -87,6 +87,6 @@ int main(){
     cout<<"\n Enter the starting vertex : ";
     cin>>sv;
     cout<<"If starting Vertex is "<<sv<<", then BFS is : ";
-    g.BFS(sv);
+    g.DFS(sv);
     return 0;
 }
